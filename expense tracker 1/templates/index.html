@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Expense Tracker</h1>
+        <p class="subtitle">Manage your money smartly</p>
+
+        <!-- Summary Cards -->
+        <div class="summary">
+
+            <div class="card">
+                <h3>Total Income</h3>
+                <p id="income">₹0</p>
+            </div>
+
+            <div class="card">
+                <h3>Total Expense</h3>
+                <p id="expense">₹0</p>
+            </div>
+
+            <div class="card">
+                <h3>Balance</h3>
+                <p id="balance">₹0</p>
+            </div>
+
+        </div>
+
+        <!-- Transaction and Budget Dashboard Row -->
+<div class="dashboard-row">
+
+    <!-- Add Transaction -->
+    <div class="form-section">
+        <h2>➕ Add Transaction</h2>
+        <p class="section-description">Record your income and expenses.</p>
+
+        <div class="transaction-form-grid">
+            <input type="text" id="description"
+                   placeholder="Enter description">
+
+            <input type="number" id="amount"
+                   placeholder="Enter amount">
+
+            <select id="type">
+                <option value="expense">Expense</option>
+                <option value="income">Income</option>
+            </select>
+
+            <select id="category">
+                <option value="Food">Food</option>
+                <option value="Travel">Travel</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Bills">Bills</option>
+                <option value="Education">Education</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <input type="date" id="date">
+
+            <button type="button" onclick="addTransaction()">
+                Add Transaction
+            </button>
+        </div>
+    </div>
+
+    <!-- Monthly Budget Tracker -->
+    <div class="budget-section">
+        <h2>🎯 Monthly Budget Tracker</h2>
+        <p class="section-description">Keep your spending on track.</p>
+
+        <label for="monthlyBudget">Set Monthly Budget (₹)</label>
+        <input
+            type="number"
+            id="monthlyBudget"
+            placeholder="Enter your monthly budget"
+            min="1"
+        >
+
+        <button type="button" onclick="saveBudget()">
+            Save Budget
+        </button>
+
+        <div class="budget-info">
+            <p>Monthly Budget: ₹<span id="budgetAmount">0</span></p>
+            <p>Total Expenses: ₹<span id="budgetSpent">0</span></p>
+            <p>Remaining Budget: ₹<span id="budgetRemaining">0</span></p>
+            <div class="budget-progress-container">
+    <div class="budget-progress-header">
+        <span>Budget Used</span>
+        <span id="budgetPercentage">0%</span>
+    </div>
+
+    <div class="budget-progress-track">
+        <div id="budgetProgressBar"
+             class="budget-progress-bar"></div>
+    </div>
+</div>
+            <p id="budgetMessage"></p>
+        </div>
+    </div>
+
+</div>
+        
+
+        <!-- Expense Analytics -->
+<div class="analytics">
+    <h2>Expense Analytics</h2>
+    <div class="charts-grid">
+
+    <div class="chart-container">
+        <h3>Income vs Expense</h3>
+        <canvas id="incomeExpenseChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <h3>Category-wise Expenses</h3>
+        <canvas id="categoryChart"></canvas>
+    </div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <!-- Transaction History -->
+        <div class="history">
+
+            <h2>Transaction History</h2>
+            <button type="button"
+             onclick="exportToCSV()">
+                 Export to CSV
+            </button>
+
+            <div class="filters">
+              <input
+                type="text"
+                id="searchInput"
+                placeholder="Search transactions..."
+                oninput="displayTransactions()"
+            >
+
+    <select id="categoryFilter" onchange="displayTransactions()">
+        <option value="All">All Categories</option>
+        <option value="Food">Food</option>
+        <option value="Travel">Travel</option>
+        <option value="Shopping">Shopping</option>
+        <option value="Bills">Bills</option>
+        <option value="Education">Education</option>
+        <option value="Other">Other</option>
+    </select>
+
+    <select id="typeFilter" onchange="displayTransactions()">
+        <option value="All">All Types</option>
+        <option value="income">Income</option>
+        <option value="expense">Expense</option>
+    </select>
+</div>
+
+            <ul id="transactionList"></ul>
+
+        </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+     
+    <script src="{{ url_for('static',filename='script.js') }}"></script>
+
+</body>
+</html>
